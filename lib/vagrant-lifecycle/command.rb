@@ -6,7 +6,7 @@ module VagrantPlugins
   module Lifecycle
     class Command < Vagrant.plugin(2, :command)
       def self.synopsis
-        "Lifecycle..."
+        "provisions the vagrant machine using a custom lifecycle event"
       end
 
       def execute
