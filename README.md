@@ -1,6 +1,7 @@
 # Vagrant Lifecycle Plugin
 
-Vagrant Lifecycle is a Vagrant plugin that allows execution of custom provisioning events for the Chef provisioners.
+Vagrant Lifecycle is a Vagrant plugin that allows execution of custom provisioning events for the Chef provisioners 
+(Chef Solo, Chef Zero and Chef Client).
 
 The primarily goal of this plugin is to ease the development and testing of Chef recipes intended for use on services
 like AWS OpsWorks.

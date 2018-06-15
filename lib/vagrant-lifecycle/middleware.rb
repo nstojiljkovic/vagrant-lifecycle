@@ -17,9 +17,9 @@ module VagrantPlugins
           chef_provisioners = env[:machine].config.vm.provisioners.select do |provisioner|
             # Vagrant 1.7 changes provisioner.name to provisioner.type
             if provisioner.respond_to? :type
-              provisioner.type.to_sym == :chef_solo
+              provisioner.type.to_sym == :chef_solo || provisioner.type.to_sym == :chef_client || provisioner.type.to_sym == :chef_zero
             else
-              provisioner.name.to_sym == :chef_solo
+              provisioner.name.to_sym == :chef_solo || provisioner.name.to_sym == :chef_client || provisioner.name.to_sym == :chef_zero
             end
           end
 
