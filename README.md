@@ -2,6 +2,9 @@
 
 Vagrant Lifecycle is a Vagrant plugin that allows execution of custom provisioning events for the Chef provisioners.
 
+The primarily goal of this plugin is to ease the development and testing of Chef recipes intended for use on services
+like AWS OpsWorks.
+
 ## Installation
 
 1. Install the latest version of [Vagrant](https://www.vagrantup.com/downloads.html)
@@ -52,9 +55,15 @@ You can execute provisioning on the specific lifecycle event via command (for ex
 $ vagrant lifecycle -e deploy
 ```
 
-## More examples
+### Usage with other Vagrant plugins
 
-### Evaluate run list based on lifecycle event and node roles 
+Currently executed lifecycle event name is available in other Vagrant plugin's middlewares through `:lifecycle_event` 
+key of the environment hash. Please note that this key will not be set during regular provision even if the
+`lifecycle.default_event` is configured.
+
+### More examples
+
+#### Evaluate run list based on lifecycle event and node roles 
 
 Example Vagrantfile configuration section:
 
@@ -98,7 +107,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-### Require additional parameter(s) for a specific lifecycle event
+#### Require additional parameter(s) for a specific lifecycle event
 
 Example Vagrantfile configuration section:
 
@@ -116,11 +125,11 @@ Vagrant.configure("2") do |config|
         end
         parser.parse!
       end
-      opt_parser.program_name="vagrant -e deploy"
+      opt_parser.program_name="vagrant lifecycle -e deploy"
 
       if options.empty?
         puts opt_parser.help
-        exit
+        exit 1
       end
 
       unless options.key?(:application)
@@ -147,10 +156,9 @@ Sample usage:
 $ vagrant lifecycle -e deploy -a really_cool_app
 ```
 
-### Use specific machine info
+#### Use specific machine info
 
 Example Vagrantfile configuration section:
-
 
 ```ruby
 Vagrant.configure("2") do |config|

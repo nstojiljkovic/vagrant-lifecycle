@@ -1,4 +1,3 @@
-require 'pathname'
 require 'vagrant/util/hash_with_indifferent_access'
 
 module VagrantPlugins

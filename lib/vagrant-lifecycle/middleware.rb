@@ -1,19 +1,5 @@
-require "vagrant-lifecycle/version"
-require "singleton"
-require 'json'
-
 module VagrantPlugins
   module Lifecycle
-    class MiddleWareConfig
-      include Singleton
-
-      attr_accessor :enabled
-
-      def initialize
-        @enabled = false
-      end
-    end
-
     class MiddleWare
       def initialize(app, env)
         @app = app
@@ -22,36 +8,8 @@ module VagrantPlugins
         @logger = Log4r::Logger.new("vagrant::lifecycle::#{klass}")
       end
 
-      # Like OptionParser.order!, but leave any unrecognized --switches alone
-      def order_recognized!(parser, args)
-        extra_opts = []
-        begin
-          parser.order!(args) {|a| extra_opts << a}
-        rescue OptionParser::InvalidOption => e
-          extra_opts << e.args[0]
-          retry
-        end
-        args[0, 0] = extra_opts
-      end
-
       def call(env)
-        if MiddleWareConfig.instance.enabled
-          options = Hash.new
-          opts = OptionParser.new do |parser|
-            parser.on("-e", "--event EVENT", "Lifecycle event to execute") do |p|
-              options[:event] = p
-            end
-            order_recognized!(parser, ARGV)
-          end
-
-          unless options.key?(:event)
-            env[:ui].error "Lifecycle event parameter missing!"
-            env[:interrupted] = true
-          end
-          event = options[:event]
-        else
-          event = env[:machine].config.lifecycle.default_event
-        end
+        event = env[:lifecycle_event] || env[:machine].config.lifecycle.default_event || nil
 
         if event.nil?
           @app.call(env)
