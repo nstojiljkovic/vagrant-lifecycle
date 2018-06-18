@@ -180,3 +180,9 @@ Vagrant.configure("2") do |config|
   }
 end
 ```
+
+#### Simulate OpsWorks stack
+
+Both vagrant-lifecycle and [vagrant-databags](https://github.com/nstojiljkovic/vagrant-databags) plugins are required for
+this example. Sample code is available in the 
+[vagrant-databags documentation](https://github.com/nstojiljkovic/vagrant-databags#simulate-opsworks-stack).
