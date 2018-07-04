@@ -1,5 +1,9 @@
 # vagrant-lifecycle Changelog
 
+## 0.1.5
+
+Fix broken evaluation of specified machines in the command line.
+
 ## 0.1.4
 
 Changed Vagrant action the plugin hooks to so it can be used together with vagrant-databags plugin (with guaranteed 

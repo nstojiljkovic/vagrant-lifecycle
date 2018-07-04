@@ -33,8 +33,9 @@ module VagrantPlugins
           exit 1
         end
         lifecycle_event = options[:event]
+        argv = parse_options(opt_parser)
 
-        with_target_vms([], reverse: true) do |machine|
+        with_target_vms(argv, reverse: true) do |machine|
           machine.action(:provision, {:lifecycle_event => lifecycle_event})
         end
 
