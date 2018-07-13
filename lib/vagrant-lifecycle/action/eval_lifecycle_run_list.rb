@@ -15,6 +15,8 @@ module VagrantPlugins
           if event.nil?
             @app.call(env)
           else
+            env[:ui].detail "[vagrant-lifecycle] Evaluating lifecycle event #{event} run list..."
+
             chef_provisioners = env[:machine].config.vm.provisioners.select do |provisioner|
               # Vagrant 1.7 changes provisioner.name to provisioner.type
               if provisioner.respond_to? :type

@@ -9,8 +9,7 @@ module VagrantPlugins
 
       [:machine_action_up, :machine_action_reload, :machine_action_provision].each do |action|
         action_hook(:lifecycle_provision, action) do |hook|
-          # contrary to how this might sound, this hook is run before :run_provisioner
-          hook.after Vagrant::Action::Builtin::Provision, Action::EvalLifecycleRunList
+          hook.before(Vagrant::Action::Builtin::Provision, Action::EvalLifecycleRunList)
         end
       end
 
